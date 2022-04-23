@@ -12,7 +12,7 @@ interface TestDNAProps {
   newTestDNA: NewTestDNA
 }
 
-export const TestDNA: FC<TestDNAProps>  = () => {
+export const TestDNAPage: FC<TestDNAProps>  = () => {
   //const dispatch = useDispatch();
   const [newTestDNA, setNewTestDNA] = useState<NewTestDNA>({namaPengguna:"", sequenceDNA:"", prediksiPenyakit:""})
 

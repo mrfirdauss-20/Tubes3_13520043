@@ -7,7 +7,7 @@ import {
 // import {useDispatch} from "react-redux";
 
 
-export const TestResultPage: FC = () => {
+export const HistoryPage: FC = () => {
   //const dispatch = useDispatch();
   const [newSearchQuery, setNewSearchQuery] = useState<SearchQuery>({date:"", penyakit:""})
 
@@ -17,7 +17,7 @@ export const TestResultPage: FC = () => {
     // var regMonth = /^[A-z]{1}[a-z]+$/
     // var regYear = /^\d{4}$/;
     const regDate = /\d{4}[-]\d{2}[-]\d{2}/g;
-    const regPenyakit = /^\w+/i;
+    const regPenyakit = /[^\d\W]+/i;
     const date = value.match(regDate);
     const penyakit = value.match(regPenyakit);
 

@@ -10,9 +10,24 @@ export interface AddNewPenyakitProps {
   newPenyakit: NewPenyakit
 }
 
-export const AddNewPenyakit: FC<AddNewPenyakitProps>  = () => {
+export const AddNewPenyakitPage: FC<AddNewPenyakitProps>  = () => {
   //const dispatch = useDispatch();
   const [newPenyakit, setNewPenyakit] = useState<NewPenyakit>({namaPenyakit:"", sequenceDNA:""})
+
+  let fileReader: FileReader;
+
+  const handleFileRead = () => {
+    const content = fileReader.result;
+    const updatedNewPenyakit = {...newPenyakit};
+    updatedNewPenyakit.sequenceDNA = content;
+    setNewPenyakit(updatedNewPenyakit);
+  };
+
+  const handleFileChosen = (file: File) => {
+    fileReader = new FileReader();
+    fileReader.onloadend = handleFileRead;
+    fileReader.readAsText(file);
+  };
 
   const handleNamaPenyakitValueChange = (value: string) => {
     const updatedNewPenyakit = {...newPenyakit};
@@ -20,11 +35,6 @@ export const AddNewPenyakit: FC<AddNewPenyakitProps>  = () => {
     setNewPenyakit(updatedNewPenyakit);
   }
 
-  const handleSequenceDNAValueChange = (value: string) => {
-    const updatedNewPenyakit = {...newPenyakit};
-    updatedNewPenyakit.sequenceDNA = value;
-    setNewPenyakit(updatedNewPenyakit);
-  }
 
   const handleAddNewPenyakit = () => {
     console.log("New Penyakit Added")
@@ -45,7 +55,13 @@ export const AddNewPenyakit: FC<AddNewPenyakitProps>  = () => {
         <Form.Field>
           <label>Sequence DNA</label>
           <input
-            onChange={(val) => handleSequenceDNAValueChange(val.currentTarget.value)}
+            type = 'file'
+            onChange={
+              (event) =>
+                event.currentTarget.files ?
+                  handleFileChosen(event.currentTarget.files[0])
+                  :
+                  console.log("a")}
           />
         </Form.Field>
       </Form>
