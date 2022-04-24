@@ -1,0 +1,20 @@
+
+CREATE DATABASE IF NOT EXISTS tubes3;
+
+use tubes3;
+
+CREATE TABLE IF NOT EXISTS penyakit(
+id INT AUTO_INCREMENT PRIMARY KEY,
+nama VARCHAR(255) NOT NULL,
+sequence text NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS hasil_tes(
+id INT PRIMARY KEY AUTO_INCREMENT,
+id_penyakit int,
+tanggal DATE NOT NULL,
+nama_pengguna VARCHAR(30) NOT NULL,
+hasil TINYINT(1) NOT NULL,
+kemiripan INT,
+FOREIGN KEY (id_penyakit) REFERENCES penyakit(id)
+);
