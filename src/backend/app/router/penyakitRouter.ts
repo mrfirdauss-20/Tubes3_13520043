@@ -1,9 +1,9 @@
 import express, {Request, Response} from "express";
 
-import * as penyakitModel from "./models/penyakit";
+import * as penyakitModel from "../models/penyakit";
 
 
-import {Penyakit} from "./types/Penyakit";
+import {Penyakit} from "../types/Penyakit";
 
 const penyakitRouter = express.Router();
 

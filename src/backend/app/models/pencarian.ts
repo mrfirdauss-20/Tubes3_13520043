@@ -1,5 +1,5 @@
-import { PencarianP } from "app/types/Pencarian";
-import { db } from "../db";
+import { PencarianP } from "../types/Pencarian";
+import { db } from "../db/db";
 import { RowDataPacket } from "mysql2";
 
 

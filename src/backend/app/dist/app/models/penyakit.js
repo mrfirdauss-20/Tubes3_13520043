@@ -37,7 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.insertPenyakit = void 0;
-var db_1 = require("../db");
+var db_1 = require("../db/db");
 var insertPenyakit = function (penyakit, callback) { return __awaiter(void 0, void 0, void 0, function () {
     var queryStr;
     return __generator(this, function (_a) {

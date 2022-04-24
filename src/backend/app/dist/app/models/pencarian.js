@@ -36,18 +36,31 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.insertPenyakit = void 0;
-var db_1 = require("../db");
-var insertPenyakit = function (penyakit, callback) { return __awaiter(void 0, void 0, void 0, function () {
+exports.findAll = void 0;
+var db_1 = require("../db/db");
+var findAll = function (callback) { return __awaiter(void 0, void 0, void 0, function () {
     var queryStr;
     return __generator(this, function (_a) {
-        queryStr = "INSERT INTO penyakit (nama,sequence) VALUES ?";
-        db_1.db.query(queryStr, [penyakit.nama, penyakit.sequence], function (err, results) {
+        queryStr = "SELECT p.nama as nama_penyakit, h.tanggal as tanggal, h.nama_pengguna as nama_pengguna, h.hasil as hasil FROM penyakit as p, hasil_tes as h WHERE p.id = h.id_penyakit;";
+        db_1.db.query(queryStr, function (err, results) {
             if (err) {
-                console.log(err);
+                callback(err);
             }
+            ;
+            var rows = results;
+            var pepenyakit = [];
+            rows.forEach(function (row) {
+                var hasil = {
+                    namaPenyakit: row.nama_penyakit,
+                    tanggal: row.tanggal,
+                    namaPengguna: row.nama_pengguna,
+                    hasil: row.hasil
+                };
+                pepenyakit.push(hasil);
+            });
+            callback(null, pepenyakit);
         });
         return [2 /*return*/];
     });
 }); };
-exports.insertPenyakit = insertPenyakit;
+exports.findAll = findAll;

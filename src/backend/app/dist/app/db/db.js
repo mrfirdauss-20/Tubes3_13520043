@@ -8,8 +8,8 @@ var mysql2_1 = __importDefault(require("mysql2"));
 var dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 exports.db = mysql2_1.default.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "rSq!!2007",
-    database: "tubes3"
+    host: process.env.HOST,
+    user: process.env.USER,
+    password: process.env.PASSWORD,
+    database: process.env.DB
 });

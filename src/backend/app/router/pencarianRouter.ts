@@ -1,7 +1,7 @@
 import express, {Request, Response} from "express";
-import * as pencarianModel from "./models/pencarian";
+import * as pencarianModel from "../models/pencarian";
 
-import { PencarianP } from "./types/Pencarian";
+import { PencarianP } from "../types/Pencarian";
 
 const pencarianRouter = express.Router();
 

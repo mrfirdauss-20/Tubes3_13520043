@@ -1,5 +1,5 @@
 import { Penyakit } from "../types/Penyakit";
-import { db } from "../db";
+import { db } from "../db/db";
 import { RowDataPacket } from "mysql2";
 
 export const insertPenyakit= async (penyakit: Penyakit, callback: Function) => {
