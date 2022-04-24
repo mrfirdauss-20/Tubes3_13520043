@@ -11,8 +11,13 @@ const app = express();
 
 app.use(bodyParser.json());
 
+//-> ini post jadi kirimnya pake form 
 app.use("/similarity", checkRouter);
+
+// localhost:3000/search/?nama_penyakit=penyakit&tanggal=2020-01-01
 app.use("/search",pencarianRouter);
+
+//
 app.use("/penyakit",penyakitRouter);
 
 app.listen(process.env.PORT,()=>{
