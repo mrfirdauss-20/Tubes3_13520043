@@ -1,6 +1,7 @@
 import { PencarianP } from "../types/Pencarian";
 import { db } from "../db/db";
 import { RowDataPacket } from "mysql2";
+import { Penyakit } from "app/types/Penyakit";
 
 
 export const findAll = async (callback: Function) => {
@@ -21,5 +22,5 @@ export const findAll = async (callback: Function) => {
         })
         callback(null, pepenyakit);
     })
-
+    
 };
