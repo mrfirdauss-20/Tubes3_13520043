@@ -3,16 +3,50 @@ import { PencarianP } from "app/types/Pencarian";
 
 import { db } from "../db/db";
 import { RowDataPacket } from "mysql2";
+import e from "express";
+import { BoyerMoore, KnuthMorrisPratt } from "../lib/string_matcher";
+
+export const insertNilaiBorder = async (idPenyakit: number, sequence: string, callback: Function) => {
+    const queryStr = "INSERT INTO nilai_border (id_penyakit, nilai_border) ?";
+    const nilai_border = KnuthMorrisPratt.border(sequence);
+    db.query(
+        queryStr,
+        [idPenyakit, JSON.stringify(nilai_border)],
+        (err, results) => {
+            if (err) {
+                callback(err)
+            }
+            KnuthMorrisPratt.borderData.set(idPenyakit, nilai_border)
+        }
+    )
+}
+
+export const insertNilaiLastOccurence = async (idPenyakit: number, sequence: string, callback: Function) => {
+    const queryStr = "INSERT INTO peta_last_occurence (id_penyakit, peta_last_occurence) ?";
+    const lastOccurence = BoyerMoore.lastOccurence(sequence);
+    db.query(
+        queryStr,
+        [idPenyakit, JSON.stringify(lastOccurence)],
+        (err, results) => {
+            if (err) {
+                callback(err)
+            }
+            BoyerMoore.lastOccurenceData.set(idPenyakit, lastOccurence)
+        }
+    )
+}
 
 export const insertPenyakit= async (namaPenyakit: string, sequence:string, callback: Function) => {
     const queryStr = "INSERT INTO penyakit (nama,sequence) VALUES ?";
     db.query(
         queryStr,
         [namaPenyakit,sequence],
-        (err, results) => {
+        async (err, results) => {
             if (err) {
                 callback(err);
             }
+            await insertNilaiBorder(results[0].id, results[0].sequence, callback);
+            await insertNilaiLastOccurence(results[0].id, results[0].sequence, callback);
         }
     )
 }
@@ -34,28 +68,35 @@ export const findSimilar = async (namaPengguna: string, namaPenyakit: string, se
         });
         // drop string comparing function here
         
-        const isValid =1;
+        const hasil = KnuthMorrisPratt.find(
+            {
+                pattern: pepenyakit[0].sequence,
+                borderValue: KnuthMorrisPratt.borderData.get(pepenyakit[0].id)
+            },
+            sequence
+        )
         const tanggal = new Date();
         // insert data
         const queryStr = "INSERT INTO hasil_tes (id_penyakit,tanggal,nama_pengguna,hasil) VALUES ?";
         db.query(
             queryStr,
-            [pepenyakit[0].id,tanggal,namaPengguna,isValid],
+            [pepenyakit[0].id,tanggal,namaPengguna, hasil == -1 ? 0 : 1],
             (err, results) => {
                 if(err){
                     callback(err);
                 }
+                const search: PencarianP = {
+                    namaPenyakit: namaPenyakit,
+                    tanggal: tanggal,
+                    namaPengguna: namaPengguna,
+                    hasil: results[0].hasil 
+                }
+        
+                callback(null, search); 
             }
         )
 
-        const search: PencarianP = {
-            namaPenyakit: namaPenyakit,
-            tanggal: tanggal,
-            namaPengguna: namaPengguna,
-            hasil: isValid 
-        }
-
-        callback(null, search); //switch pepenyakit dengan jawaban
+        //switch pepenyakit dengan jawaban
     })
 
 }

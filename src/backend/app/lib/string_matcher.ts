@@ -1,3 +1,6 @@
+import { db } from "../db/db";
+import { RowDataPacket } from "mysql2";
+
 interface KnuthMorrisPrattPattern {
   pattern: string;
   borderValue: number[];
@@ -8,11 +11,25 @@ interface BoyerMoorePattern {
   lastOccurenceMap: Map<string, number[]>;
 }
 
-class KnuthMorrisPratt {
+export class KnuthMorrisPratt {
   // border data maps the name of a disease and array of number that map index as k and the returned value of
   // the border function
-  static borderData: Map<string, number[]>;
-
+  static borderData: Map<number, number[]> = new Map();
+  static async loadData() {
+    let queryStr = "SELECT * FROM nilai_border"
+    db.query(
+      queryStr,
+      (err, results: RowDataPacket[]) => {
+        if (err) {
+          console.log(err.message)
+        }
+        results.forEach((val) => {
+          this.borderData.set(val.id_penyakit, JSON.parse(val.nilai_border));
+        })
+        console.log("Nilai Border Loaded")
+      }
+    )
+  }
   static find(pattern: KnuthMorrisPrattPattern, text: string): number {
     let textPointer: number = 0;
     let patternPointer: number = 0;
@@ -84,7 +101,23 @@ class KnuthMorrisPratt {
   }
 }
 
-class BoyerMoore {
+export class BoyerMoore {
+  static lastOccurenceData: Map<number, Map<string, number[]>> = new Map();
+  static async loadData() {
+    let queryStr = "SELECT * FROM peta_last_occurence"
+    db.query(
+      queryStr,
+      (err, results: RowDataPacket[]) => {
+        if (err) {
+          console.log(err.message)
+        }
+        results.forEach((val) => {
+          this.lastOccurenceData.set(val.id_penyakit, JSON.parse(val.peta_last_occurence));
+        })
+        console.log("Nilai last occurence Loaded")
+      }
+    )
+  }
   static lastOccurence(pattern: string): Map<string, number[]> {
     let lastOccurenceMap: Map<string, number[]> = new Map<string, number[]>();
     for (let i: number = 0; i < pattern.length; i++) {
