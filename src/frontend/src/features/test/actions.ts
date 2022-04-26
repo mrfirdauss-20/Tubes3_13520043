@@ -32,7 +32,7 @@ export const storeNewPenyakit =
   async (newPenyakit : NewPenyakit
   ) => {
     const URL_PATH = "penyakit";
-    const url = "localhost:5000/" + URL_PATH;
+    const url = "http://localhost:5000/" + URL_PATH;
     const urlEncodedParams = new URLSearchParams();
     urlEncodedParams.append("data", JSON.stringify({
         "nama_penyakit": newPenyakit.namaPenyakit,
@@ -43,39 +43,16 @@ export const storeNewPenyakit =
         method: "post",
         url: url,
         withCredentials: true,
-        data: urlEncodedParams,
+        headers: {'Content-Type': 'application/json' },
+        data: JSON.stringify({
+          "nama_penyakit": newPenyakit.namaPenyakit,
+          "sequence": newPenyakit.sequenceDNA,
+        }),
         validateStatus: () => true
       })
     )
   }
-// export const storeNewPenyakit = (newPenyakit: NewPenyakit) => {
-//   return(
-//     const URL_PATH = "penyakit";
-//     const url =  "localhost:5000/" + URL_PATH;
-//     const urlEncodedParams = new URLSearchParams();
-//     urlEncodedParams.append("data", JSON.stringify({
-//         "nama_penyakit": newPenyakit.namaPenyakit,
-//         "sequence": newPenyakit.sequenceDNA,
-//       }));
-//
-//
-//       axios({
-//         method: "post",
-//         url: url,
-//         withCredentials: true,
-//         data: urlEncodedParams,
-//         validateStatus: () => true
-//       })
-//         .then(response => {
-//           if (response.status === 200) {
-//             console.log("Berhasil");
-//           } else {
-//             console.log("Error");
-//           }
-//           console.log(response)
-//         });
-//   )
-// }
+
 
 export const submitTestDNA =
   (newTestDNA : NewTestDNA

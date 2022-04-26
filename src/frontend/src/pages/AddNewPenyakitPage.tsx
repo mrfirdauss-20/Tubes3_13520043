@@ -39,13 +39,12 @@ export const AddNewPenyakitPage: FC<AddNewPenyakitProps>  = () => {
     setNewPenyakit(updatedNewPenyakit);
   }
 
-
   const handleAddNewPenyakit = async () => {
     try {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       let response = await storeNewPenyakit(newPenyakit);
       setNewPenyakit(initialState.newPenyakit);
-      console.log(response.data);
+      console.log(response);
     }
     catch (e: any){
       console.log(e.message);
