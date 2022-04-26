@@ -19,12 +19,15 @@ export class KnuthMorrisPratt {
     let queryStr = "SELECT * FROM nilai_border"
     db.query(
       queryStr,
-      (err, results: RowDataPacket[]) => {
+      (err, results) => {
         if (err) {
           console.log(err.message)
         }
-        results.forEach((val) => {
-          this.borderData.set(val.id_penyakit, JSON.parse(val.nilai_border));
+        const rows = <RowDataPacket>results;
+        rows.forEach((val) => {
+          //console.log(val.nilai_border);
+          //console.log("Parsed: ",JSON.parse(JSON.stringify(val.nilai_border)));
+          this.borderData.set(val.id_penyakit,JSON.parse(JSON.stringify(val.nilai_border)));
         })
         console.log("Nilai Border Loaded")
       }
@@ -107,14 +110,15 @@ export class BoyerMoore {
     let queryStr = "SELECT * FROM peta_last_occurence"
     db.query(
       queryStr,
-      (err, results: RowDataPacket[]) => {
+      (err, results) => {
         if (err) {
           console.log(err.message)
         }
-        results.forEach((val) => {
-          this.lastOccurenceData.set(val.id_penyakit, JSON.parse(val.peta_last_occurence));
+        const rows = <RowDataPacket>results;
+        rows.forEach((val) => {
+          this.lastOccurenceData.set(val.id_penyakit, JSON.parse(JSON.stringify(val.peta_last_occurence)));
         })
-        console.log("Nilai last occurence Loaded")
+        //console.log("Nilai last occurence Loaded")
       }
     )
   }
