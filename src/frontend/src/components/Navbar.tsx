@@ -5,14 +5,17 @@ export const Navbar: React.FC = () => (
   <nav>
     <div className="nav-wrapper cyan darken-1 px1">
       <NavLink to="/" className="brand-logo">
-        Redux + TypeScript
+        DNAcheck
       </NavLink>
       <ul className="right hide-on-med-and-down">
         <li cy-data="home-nav-link">
-          <NavLink to="/">Home</NavLink>
+          <NavLink to="/test">Disease Test</NavLink>
         </li>
         <li>
-          <NavLink to="/about">About</NavLink>
+          <NavLink to="/addpenyakit">Add New Disease</NavLink>
+        </li>
+        <li>
+          <NavLink to="/history">History</NavLink>
         </li>
       </ul>
     </div>
