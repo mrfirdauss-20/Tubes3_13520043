@@ -29,20 +29,16 @@ export const updateStoringPenyakit = (isStoring: boolean) => {
 };
 
 export const storeNewPenyakit =
-  (newPenyakit : NewPenyakit
+  async (newPenyakit : NewPenyakit
   ) => {
-    return (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
-      const URL_PATH = "";
-      const url =  "/" + URL_PATH;
-      const urlEncodedParams = new URLSearchParams();
-
-      urlEncodedParams.append("data", JSON.stringify({
-        "nama": newPenyakit.namaPenyakit,
+    const URL_PATH = "penyakit";
+    const url = "localhost:5000/" + URL_PATH;
+    const urlEncodedParams = new URLSearchParams();
+    urlEncodedParams.append("data", JSON.stringify({
+        "nama_penyakit": newPenyakit.namaPenyakit,
         "sequence": newPenyakit.sequenceDNA,
       }));
-
-      dispatch(updateStoringPenyakit(true));
-
+    return (
       axios({
         method: "post",
         url: url,
@@ -50,18 +46,36 @@ export const storeNewPenyakit =
         data: urlEncodedParams,
         validateStatus: () => true
       })
-        .then(response => {
-          if (response.status === 200) {
-            const ldiName = response.data.message.name;
-            dispatch(updateStoringPenyakit(true));
-          } else {
-            console.log("Error");
-          }
-        });
-
-    };
-
-  };
+    )
+  }
+// export const storeNewPenyakit = (newPenyakit: NewPenyakit) => {
+//   return(
+//     const URL_PATH = "penyakit";
+//     const url =  "localhost:5000/" + URL_PATH;
+//     const urlEncodedParams = new URLSearchParams();
+//     urlEncodedParams.append("data", JSON.stringify({
+//         "nama_penyakit": newPenyakit.namaPenyakit,
+//         "sequence": newPenyakit.sequenceDNA,
+//       }));
+//
+//
+//       axios({
+//         method: "post",
+//         url: url,
+//         withCredentials: true,
+//         data: urlEncodedParams,
+//         validateStatus: () => true
+//       })
+//         .then(response => {
+//           if (response.status === 200) {
+//             console.log("Berhasil");
+//           } else {
+//             console.log("Error");
+//           }
+//           console.log(response)
+//         });
+//   )
+// }
 
 export const submitTestDNA =
   (newTestDNA : NewTestDNA
@@ -87,7 +101,6 @@ export const submitTestDNA =
       })
         .then(response => {
           if (response.status === 200) {
-            const ldiName = response.data.message.name;
             dispatch(updateStoringPenyakit(true));
           } else {
             console.log("Error");

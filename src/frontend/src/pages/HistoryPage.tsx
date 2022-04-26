@@ -10,12 +10,23 @@ import {
 export const HistoryPage: FC = () => {
   //const dispatch = useDispatch();
   const [newSearchQuery, setNewSearchQuery] = useState<SearchQuery>({date:"", penyakit:""})
+  // const renderSearchHistory = (testResults: TestResult[]) => {
+  //   let resultContent: JSX.Element[] = [];
+  //   testResults.forEach((testResult: TestResult) => {
+  //     resultContent.push(
+  //       <div>
+  //         <div>{testResult.date}</div>
+  //         <div>{testResult.hasil}</div>
+  //         <div>{testResult.penyakit}</div>
+  //         <div>{testResult.namaPengguna}</div>
+  //       </div>
+  //     );
+  //   });
+  //   return resultContent;
+  // }
 
   const convertQueryToRegex = (value: string) =>
   {
-    // var regDate = /^\d{2}$/;
-    // var regMonth = /^[A-z]{1}[a-z]+$/
-    // var regYear = /^\d{4}$/;
     const regDate = /\d{4}[-]\d{2}[-]\d{2}/g;
     const regPenyakit = /[^\d\W]+/i;
     const date = value.match(regDate);
@@ -25,7 +36,6 @@ export const HistoryPage: FC = () => {
     if(date) updatedNewSearchQuery.date = date.toString();
     if (penyakit) updatedNewSearchQuery.penyakit = penyakit.toString();
     setNewSearchQuery(updatedNewSearchQuery);
-    console.log(updatedNewSearchQuery);
   }
 
   const handleSearchQueryChange = (value: string) => {
