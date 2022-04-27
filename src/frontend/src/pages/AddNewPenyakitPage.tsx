@@ -4,15 +4,19 @@ import {Button, Form, Header} from "semantic-ui-react";
 import {
   NewPenyakit
 } from "../state";
+import { storeNewPenyakit } from "../features/test/actions";
 
 export interface AddNewPenyakitProps {
   handleAddNewPenyakit: () => void;
   newPenyakit: NewPenyakit
 }
 
+const initialState = {
+  newPenyakit: {namaPenyakit:"", sequenceDNA:""}
+}
 export const AddNewPenyakitPage: FC<AddNewPenyakitProps>  = () => {
-  //const dispatch = useDispatch();
-  const [newPenyakit, setNewPenyakit] = useState<NewPenyakit>({namaPenyakit:"", sequenceDNA:""})
+  // const dispatch = useDispatch();
+  const [newPenyakit, setNewPenyakit] = useState<NewPenyakit>(initialState.newPenyakit)
 
   let fileReader: FileReader;
 
@@ -35,9 +39,16 @@ export const AddNewPenyakitPage: FC<AddNewPenyakitProps>  = () => {
     setNewPenyakit(updatedNewPenyakit);
   }
 
-
-  const handleAddNewPenyakit = () => {
-    console.log("New Penyakit Added")
+  const handleAddNewPenyakit = async () => {
+    try {
+      let response = await storeNewPenyakit(newPenyakit);
+      setNewPenyakit(initialState.newPenyakit);
+      console.log(response);
+    }
+    catch (e: any){
+      console.log(e.message);
+      console.log("Error")
+    }
   }
 
   return (

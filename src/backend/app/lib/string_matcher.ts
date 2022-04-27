@@ -24,11 +24,14 @@ export class KnuthMorrisPratt {
           console.log(err.message)
         }
         const rows = <RowDataPacket>results;
-        rows.forEach((val) => {
-          //console.log(val.nilai_border);
-          //console.log("Parsed: ",JSON.parse(JSON.stringify(val.nilai_border)));
-          this.borderData.set(val.id_penyakit,JSON.parse(JSON.stringify(val.nilai_border)));
-        })
+        rows?
+          rows.forEach((val) => {
+            //console.log(val.nilai_border);
+            //console.log("Parsed: ",JSON.parse(JSON.stringify(val.nilai_border)));
+            this.borderData.set(val.id_penyakit,JSON.parse(JSON.stringify(val.nilai_border)));
+          })
+          :
+          console.log("rows kosong");
         console.log("Nilai Border Loaded")
       }
     )
@@ -115,9 +118,12 @@ export class BoyerMoore {
           console.log(err.message)
         }
         const rows = <RowDataPacket>results;
-        rows.forEach((val) => {
-          this.lastOccurenceData.set(val.id_penyakit, JSON.parse(JSON.stringify(val.peta_last_occurence)));
-        })
+        rows?
+          rows.forEach((val) => {
+            this.lastOccurenceData.set(val.id_penyakit, JSON.parse(JSON.stringify(val.peta_last_occurence)));
+          })
+        :
+          console.log("rows kosong");
         //console.log("Nilai last occurence Loaded")
       }
     )

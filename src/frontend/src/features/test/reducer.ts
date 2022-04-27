@@ -1,18 +1,25 @@
-import {
-  NewPenyakit,
-  NewTestDNA,
-  TestResult
-} from "../../state"
-import {ADD_NEW_TEST_DNA} from "./actions";
+// import {
+//
+// } from "../../state"
+import {ADD_NEW_PENYAKIT} from "./actions";
 
 const initialState = {
-  testResults : []
+  testResults : [{  date: "",
+    namaPengguna: "",
+    penyakit: "",
+    hasil: ""}],
+  newPenyakit: {
+    namaPenyakit: "",
+    sequenceDNA: ""
+  }
 }
 
-export default (state= initialState, action: any) => {
+export default (state=initialState, action: any) => {
   switch (action.type) {
-    case (ADD_NEW_TEST_DNA):
-        return
+    case (ADD_NEW_PENYAKIT):
+        return Object.assign({}, state, {
+          newPenyakit: action.payload
+        });
   }
 
 }

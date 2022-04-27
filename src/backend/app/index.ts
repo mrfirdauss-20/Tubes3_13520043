@@ -9,7 +9,15 @@ import { penyakitRouter } from "./router/penyakitRouter";
 import { BoyerMoore, KnuthMorrisPratt } from "./lib/string_matcher";
 const app = express();
 
+app.use(express.urlencoded({extended: true}))
+
 app.use(express.json());
+
+const cors = require('cors')
+app.use(
+  cors({
+      origin: 'http://localhost:3000'
+  }))
 
 //-> ini post jadi kirimnya pake form 
 app.use("/similarity", checkRouter);

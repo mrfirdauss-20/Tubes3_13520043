@@ -3,6 +3,7 @@ import {Button, Form, Header} from "semantic-ui-react";
 import {
   NewTestDNA
 } from "../state";
+import { storeNewPenyakit, submitTesDNA } from "../features/test/actions";
 
 // import {useDispatch} from "react-redux";
 
@@ -43,8 +44,15 @@ export const TestDNAPage: FC<TestDNAProps>  = () => {
     setNewTestDNA(updatedNewTestDNA);
   }
 
-  const handleAddNewTestDNA = () => {
-    console.log("New Test DNA Added")
+  const handleAddNewTestDNA = async () => {
+    try {
+      let response = await submitTesDNA(newTestDNA);
+      console.log(response);
+    }
+    catch (e: any){
+      console.log(e.message);
+      console.log("Error")
+    }
   }
 
   return (

@@ -28,12 +28,20 @@ export const findAll = async (callback: Function) => {
 
 //ini kalo ada tanggal dan nama penyakit, kalo salah satu belum kepikiran
 export const findByNamaPenyakitAndTanggal = async (namaPenyakit: string, tanggal: string, callback: Function) => {
-    const queryStr = "SELECT h.tanggal as tanggal, h.nama_pengguna as nama_pengguna, p.nama as nama_penyakit, h.hasil as hasil FROM penyakit as p, hasil_tes as h WHERE p.id = h.id_penyakit AND p.nama = ? AND h.tanggal = ?;";
-    db.query(queryStr, [namaPenyakit, tanggal], (err, results) => {
+    let queryStr = "SELECT h.tanggal as tanggal, h.nama_pengguna as nama_pengguna, p.nama as nama_penyakit, h.hasil as hasil FROM penyakit as p, hasil_tes as h WHERE p.id = h.id_penyakit AND ";
+    if(tanggal != "" && namaPenyakit != ""){
+        queryStr += "p.nama = '"+namaPenyakit+"' AND h.tanggal like '"+tanggal+"%';";
+    }else if(tanggal!=""){
+        queryStr += "h.tanggal like '"+tanggal+"%';";
+    }else{
+        queryStr+= "p.nama = '"+namaPenyakit+"';";
+    }
+    console.log(queryStr);
+    db.query(queryStr, [], (err, results) => {
         if (err) {callback(err)};
         const rows = <RowDataPacket[]>results;
         const pepenyakit: PencarianP[] = [];
-
+        console.log(rows);
         rows.forEach(row=>{
             const hasil: PencarianP = {
                 namaPenyakit: row.nama_penyakit,
