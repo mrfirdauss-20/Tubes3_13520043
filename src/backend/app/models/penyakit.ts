@@ -68,6 +68,7 @@ export const findSimilar = async (namaPengguna: string, namaPenyakit: string, se
         if (err) {callback(err)};
         const rows = <RowDataPacket>results;
         const pepenyakit: Penyakit[] = [];
+
         if(rows.length === 0){
             callback(null, []);
         }else{
@@ -92,6 +93,7 @@ export const findSimilar = async (namaPengguna: string, namaPenyakit: string, se
             // insert data
             const queryStr = "INSERT INTO hasil_tes (id_penyakit,tanggal,nama_pengguna,hasil) VALUES (?,?,?,?);";
             const isValid = hasil == -1 ? 0 : 1
+            const hasil_tes : PencarianP []= [];
             db.query(
                 queryStr,
                 [pepenyakit[0].id,tanggal,namaPengguna, isValid ],
@@ -101,17 +103,17 @@ export const findSimilar = async (namaPengguna: string, namaPenyakit: string, se
                     }
                     console.log(results)
                     
-                    const search: PencarianP = {
+                    var search: PencarianP = {
                         namaPenyakit: namaPenyakit,
                         tanggal: tanggal,
                         namaPengguna: namaPengguna,
                         hasil: isValid 
                     }
-            
+                    hasil_tes.push(search);
                     callback(null, search); 
                 }
             )
-            callback(null, isValid);
+            callback(null,hasil_tes.pop() );
         }
         
 
