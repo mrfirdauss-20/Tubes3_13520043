@@ -68,47 +68,52 @@ export const findSimilar = async (namaPengguna: string, namaPenyakit: string, se
         if (err) {callback(err)};
         const rows = <RowDataPacket>results;
         const pepenyakit: Penyakit[] = [];
-
-        rows.forEach(row=>{
-            const hasil: Penyakit = {
-                id: row.id,
-                nama: row.nama_penyakit,
-                sequence: row.sequence
-            }
-            pepenyakit.push(hasil);
-        });
-        // drop string comparing function here
-        
-        const hasil = KnuthMorrisPratt.find(
-            {
-                pattern: pepenyakit[0].sequence,
-                borderValue: KnuthMorrisPratt.borderData.get(pepenyakit[0].id)
-            },
-            sequence
-        )
-        const tanggal = new Date();
-        // insert data
-        const queryStr = "INSERT INTO hasil_tes (id_penyakit,tanggal,nama_pengguna,hasil) VALUES (?,?,?,?);";
-        const isValid = hasil == -1 ? 0 : 1
-        db.query(
-            queryStr,
-            [pepenyakit[0].id,tanggal,namaPengguna, isValid ],
-            (err, results) => {
-                if(err){
-                    callback(err);
+        if(rows.length === 0){
+            callback(null, []);
+        }else{
+            rows.forEach(row=>{
+                const hasil: Penyakit = {
+                    id: row.id,
+                    nama: row.nama_penyakit,
+                    sequence: row.sequence
                 }
-                console.log(results)
-                
-                const search: PencarianP = {
-                    namaPenyakit: namaPenyakit,
-                    tanggal: tanggal,
-                    namaPengguna: namaPengguna,
-                    hasil: isValid 
+                pepenyakit.push(hasil);
+            });
+            // drop string comparing function here
+            
+            const hasil = KnuthMorrisPratt.find(
+                {
+                    pattern: pepenyakit[0].sequence,
+                    borderValue: KnuthMorrisPratt.borderData.get(pepenyakit[0].id)
+                },
+                sequence
+            )
+            const tanggal = new Date();
+            // insert data
+            const queryStr = "INSERT INTO hasil_tes (id_penyakit,tanggal,nama_pengguna,hasil) VALUES (?,?,?,?);";
+            const isValid = hasil == -1 ? 0 : 1
+            db.query(
+                queryStr,
+                [pepenyakit[0].id,tanggal,namaPengguna, isValid ],
+                (err, results) => {
+                    if(err){
+                        callback(err);
+                    }
+                    console.log(results)
+                    
+                    const search: PencarianP = {
+                        namaPenyakit: namaPenyakit,
+                        tanggal: tanggal,
+                        namaPengguna: namaPengguna,
+                        hasil: isValid 
+                    }
+            
+                    callback(null, search); 
                 }
+            )
+            callback(null, isValid);
+        }
         
-                callback(null, search); 
-            }
-        )
 
         //switch pepenyakit dengan jawaban
     })
