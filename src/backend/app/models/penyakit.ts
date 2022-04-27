@@ -68,7 +68,10 @@ export const findSimilar = async (namaPengguna: string, namaPenyakit: string, se
         if (err) {callback(err)};
         const rows = <RowDataPacket>results;
         const pepenyakit: Penyakit[] = [];
-
+        console.log("line 71", rows)
+      if(rows.length === 0){
+        callback(null, []);
+      }
         rows.forEach(row=>{
             const hasil: Penyakit = {
                 id: row.id,

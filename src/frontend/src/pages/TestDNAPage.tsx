@@ -27,7 +27,7 @@ export const TestDNAPage: FC<TestDNAProps>  = () => {
 
   let fileReader: FileReader;
 
-  const renderTestResult = useCallback(() => {
+  const renderTestResult = () => {
       return(
         <Card className="history-page-card-component">
           <Card.Content>
@@ -38,7 +38,7 @@ export const TestDNAPage: FC<TestDNAProps>  = () => {
           </Card.Content>
         </Card>
         )
-  }, [testResult]);
+  };
 
   const handleFileRead = () => {
     const content = fileReader.result;
@@ -79,7 +79,12 @@ export const TestDNAPage: FC<TestDNAProps>  = () => {
     try {
       isValidSequenceDNA(newTestDNA.sequenceDNA);
       let response = await submitTesDNA(newTestDNA);
-      updateTestResult(response.data.data);
+      if (response.status == 404){
+        console.log("Data blma da");
+      } else{
+        updateTestResult(response.data.data);
+
+      }
     }
     catch (e: any){
       console.log(e.message);
@@ -122,7 +127,20 @@ export const TestDNAPage: FC<TestDNAProps>  = () => {
       <Button onClick={handleAddNewTestDNA}>
         Submit
       </Button>
-      {testResult.date != "" ? renderTestResult() : <></>}
+      {
+        testResult.date != "" ?
+        <Card className="history-page-card-component">
+        <Card.Content>
+        <Card.Header>{testResult.namaPengguna}</Card.Header>
+        <Card.Meta>{convertDateUsingRegex(testResult.date)}</Card.Meta>
+        <Card.Description>{testResult.penyakit}</Card.Description>
+        <Card.Description>{testResult.hasil == true ? "Positive" : "Negative"}</Card.Description>
+        </Card.Content>
+        </Card>
+      :
+          console.log("lala")
+      }
+
     </>
 
   )
