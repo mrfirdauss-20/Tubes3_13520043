@@ -1,6 +1,6 @@
 import {
   NewTestDNA,
-  NewPenyakit
+  NewPenyakit, SearchQuery
 } from "../../state";
 import {ThunkDispatch} from "redux-thunk";
 import {AnyAction} from "redux";
@@ -33,16 +33,10 @@ export const storeNewPenyakit =
   ) => {
     const URL_PATH = "penyakit";
     const url = "http://localhost:5000/" + URL_PATH;
-    const urlEncodedParams = new URLSearchParams();
-    urlEncodedParams.append("data", JSON.stringify({
-        "nama_penyakit": newPenyakit.namaPenyakit,
-        "sequence": newPenyakit.sequenceDNA,
-      }));
     return (
       axios({
         method: "post",
         url: url,
-        withCredentials: true,
         headers: {'Content-Type': 'application/json' },
         data: JSON.stringify({
           "nama_penyakit": newPenyakit.namaPenyakit,
@@ -53,37 +47,41 @@ export const storeNewPenyakit =
     )
   }
 
-
-export const submitTestDNA =
-  (newTestDNA : NewTestDNA
+export const submitTesDNA =
+  async (newTestDNA : NewTestDNA
   ) => {
-    return (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
-      const URL_PATH = "";
-      const url = "/" + URL_PATH;
-      const urlEncodedParams = new URLSearchParams();
-
-      urlEncodedParams.append("data", JSON.stringify({
-        "nama_pasien": newTestDNA.namaPengguna,
-        "sequence": newTestDNA.sequenceDNA,
-      }));
-
-      dispatch(updateStoringPenyakit(true));
-
+    const URL_PATH = "similarity";
+    const url = "http://localhost:5000/" + URL_PATH;
+    return (
       axios({
         method: "post",
         url: url,
-        withCredentials: true,
-        data: urlEncodedParams,
+        headers: {'Content-Type': 'application/json' },
+        data: JSON.stringify({
+          "namaPengguna": newTestDNA.namaPengguna,
+          "namaPenyakit": newTestDNA.prediksiPenyakit,
+          "sequence": newTestDNA.sequenceDNA,
+        }),
         validateStatus: () => true
       })
-        .then(response => {
-          if (response.status === 200) {
-            dispatch(updateStoringPenyakit(true));
-          } else {
-            console.log("Error");
-          }
-        });
+    )
+  }
 
-    };
-
-  };
+export const searchTestHistory =
+  async (searchQuery: SearchQuery
+  ) => {
+    const URL_PATH = "search";
+    const url = "http://localhost:5000/" + URL_PATH;
+    return (
+      axios({
+        method: "post",
+        url: url,
+        headers: {'Content-Type': 'application/json' },
+        data: JSON.stringify({
+          "nama_penyakit": searchQuery.penyakit,
+          "tanggal": searchQuery.date
+        }),
+        validateStatus: () => true
+      })
+    )
+  }

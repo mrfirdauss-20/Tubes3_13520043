@@ -1,29 +1,47 @@
-import React, {FC, useState} from "react";
+import React, {FC, useState, useEffect} from "react";
 import {Button, Form, Header} from "semantic-ui-react";
 import {
-  SearchQuery
+  SearchQuery,
+  TestResult
 } from "../state";
+import { searchTestHistory } from "../features/test/actions";
 
 // import {useDispatch} from "react-redux";
 
+const initialState = {
+  newSearchQuery: {date:"", penyakit:""},
+  testResults: []
+}
 
 export const HistoryPage: FC = () => {
-  //const dispatch = useDispatch();
-  const [newSearchQuery, setNewSearchQuery] = useState<SearchQuery>({date:"", penyakit:""})
-  // const renderSearchHistory = (testResults: TestResult[]) => {
-  //   let resultContent: JSX.Element[] = [];
-  //   testResults.forEach((testResult: TestResult) => {
-  //     resultContent.push(
-  //       <div>
-  //         <div>{testResult.date}</div>
-  //         <div>{testResult.hasil}</div>
-  //         <div>{testResult.penyakit}</div>
-  //         <div>{testResult.namaPengguna}</div>
-  //       </div>
-  //     );
-  //   });
-  //   return resultContent;
-  // }
+  const [newSearchQuery, setNewSearchQuery] = useState<SearchQuery>(initialState.newSearchQuery)
+  const [testResults, setTestResults] = useState<TestResult[]>(initialState.testResults)
+
+  const convertDateUsingRegex = (value: string) => {
+    const regDate = /\d{4}[-]\d{2}[-]\d{2}/g;
+    const date = value.match(regDate);
+    return date;
+  }
+
+  const renderSearchHistory = () => {
+    let resultContent: JSX.Element[] = [];
+    testResults.forEach((testResult: TestResult) => {
+      resultContent.push(
+        <div>
+          <div>{convertDateUsingRegex(testResult.date)}</div>
+          <div>{testResult.hasil == true ? "Positive" : "Negative"}</div>
+          <div>{testResult.penyakit}</div>
+          <div>{testResult.namaPengguna}</div>
+        </div>
+      );
+    });
+
+    return (
+      <div>
+        {resultContent}
+      </div>
+      )
+  }
 
   const convertQueryToRegex = (value: string) =>
   {
@@ -32,7 +50,7 @@ export const HistoryPage: FC = () => {
     const date = value.match(regDate);
     const penyakit = value.match(regPenyakit);
 
-    const updatedNewSearchQuery = {...newSearchQuery};
+    let updatedNewSearchQuery = {date:"", penyakit:""};
     if(date) updatedNewSearchQuery.date = date.toString();
     if (penyakit) updatedNewSearchQuery.penyakit = penyakit.toString();
     setNewSearchQuery(updatedNewSearchQuery);
@@ -42,8 +60,35 @@ export const HistoryPage: FC = () => {
     convertQueryToRegex(value);
   }
 
-  const handleSearchTestResult = () => {
-    console.log("Searching")
+  const updateTestResults = (data: any[]) => {
+    let testResultsResponse: TestResult[] = [];
+    data.forEach((testResult: any) => {
+      testResultsResponse.push({
+        date: testResult.tanggal,
+        namaPengguna: testResult.namaPengguna,
+        penyakit: testResult.namaPenyakit,
+        hasil: testResult.hasil,
+      })
+    });
+    setTestResults(testResultsResponse);
+  }
+
+  const handleSearchTestResult = async () => {
+    try {
+      let response = await searchTestHistory(newSearchQuery);
+      if (response.status == 404) {
+        setTestResults(initialState.testResults);
+      } else if (response.status == 200) {
+        updateTestResults(response.data.data);
+      }
+    }
+  catch (e: any){
+      console.log(e.message);
+    }
+  }
+
+  const handleResetButtonClicked = () => {
+    setTestResults(initialState.testResults);
   }
 
   return (
@@ -62,6 +107,15 @@ export const HistoryPage: FC = () => {
       <Button onClick={handleSearchTestResult}>
         Submit
       </Button>
+      <Button onClick={handleResetButtonClicked}>
+        Reset
+      </Button>
+      {
+        testResults.length > 0 ?
+          renderSearchHistory()
+          :
+          <div>Tidak ada data</div>
+      }
     </>
 
   )
