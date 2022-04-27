@@ -17,8 +17,7 @@ checkRouter.post("/", async (req: Request, res: Response) =>{
         }
 
         //ini nyesuaiin dari ave
-        console.log("res", results)
-        if(results.length === 0){
+        if(results.length == 0){
             res.status(404).json({"messages": "Data not found"});
         }else{
             res.status(200).json({"data": results});

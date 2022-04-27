@@ -23,22 +23,23 @@ export const TestDNAPage: FC<TestDNAProps>  = () => {
   //const dispatch = useDispatch();
   const [newTestDNA, setNewTestDNA] = useState<NewTestDNA>(initialState.newTestDNA);
   const [testResult, setTestResult] = useState<TestResult>(initialState.testResult);
+  
   const [invalidSequenceDNA, setInvalidSequenceDNA] = useState(false);
 
   let fileReader: FileReader;
 
-  const renderTestResult = () => {
-      return(
-        <Card className="history-page-card-component">
-          <Card.Content>
-            <Card.Header>{testResult.namaPengguna}</Card.Header>
-            <Card.Meta>{convertDateUsingRegex(testResult.date)}</Card.Meta>
-            <Card.Description>{testResult.penyakit}</Card.Description>
-            <Card.Description>{testResult.hasil == true ? "Positive" : "Negative"}</Card.Description>
-          </Card.Content>
-        </Card>
-        )
-  };
+  // const renderTestResult = () => {
+  //     return(
+  //       <Card className="history-page-card-component">
+  //         <Card.Content>
+  //           <Card.Header>{testResult.namaPengguna}</Card.Header>
+  //           <Card.Meta>{convertDateUsingRegex(testResult.date)}</Card.Meta>
+  //           <Card.Description>{testResult.penyakit}</Card.Description>
+  //           <Card.Description>{testResult.hasil == true ? "Positive" : "Negative"}</Card.Description>
+  //         </Card.Content>
+  //       </Card>
+  //       )
+  // };
 
   const handleFileRead = () => {
     const content = fileReader.result;
@@ -66,7 +67,7 @@ export const TestDNAPage: FC<TestDNAProps>  = () => {
   }
 
   const updateTestResult = (data: any) => {
-    let testResultsResponse = initialState.testResult;
+    let testResultsResponse = {...initialState.testResult};
     testResultsResponse.date =  data.tanggal;
     testResultsResponse.namaPengguna = data.namaPengguna;
     testResultsResponse.penyakit = data. namaPenyakit;
@@ -80,9 +81,9 @@ export const TestDNAPage: FC<TestDNAProps>  = () => {
       isValidSequenceDNA(newTestDNA.sequenceDNA);
       let response = await submitTesDNA(newTestDNA);
       if (response.status == 404){
-        console.log("Data blma da");
+        return (<Message warning><Message.Header>Data penyakit tidak ada</Message.Header></Message>)
       } else{
-        updateTestResult(response.data.data);
+        updateTestResult(response.data.data[0]);
 
       }
     }
@@ -127,18 +128,19 @@ export const TestDNAPage: FC<TestDNAProps>  = () => {
       <Button onClick={handleAddNewTestDNA}>
         Submit
       </Button>
+      {        console.log("130", testResult)}
       {
         testResult.date != "" ?
         <Card className="history-page-card-component">
-        <Card.Content>
-        <Card.Header>{testResult.namaPengguna}</Card.Header>
-        <Card.Meta>{convertDateUsingRegex(testResult.date)}</Card.Meta>
-        <Card.Description>{testResult.penyakit}</Card.Description>
-        <Card.Description>{testResult.hasil == true ? "Positive" : "Negative"}</Card.Description>
-        </Card.Content>
+          <Card.Content>
+          <Card.Header>{testResult.namaPengguna}</Card.Header>
+          <Card.Meta>{convertDateUsingRegex(testResult.date)}</Card.Meta>
+          <Card.Description>{testResult.penyakit}</Card.Description>
+          <Card.Description>{testResult.hasil == true ? "Positive" : "Negative"}</Card.Description>
+          </Card.Content>
         </Card>
       :
-          console.log("lala")
+          console.log("142")
       }
 
     </>

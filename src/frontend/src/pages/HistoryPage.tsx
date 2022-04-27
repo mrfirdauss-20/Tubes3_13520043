@@ -25,7 +25,7 @@ export const HistoryPage: FC = () => {
         <Card className="history-page-card-component">
           <Card.Content>
             <Card.Header>{testResult.namaPengguna}</Card.Header>
-            <Card.Meta>{convertDateUsingRegex(testResult.date)}</Card.Meta>
+            <Card.Meta>{testResult.date}</Card.Meta>
             <Card.Description>{testResult.penyakit}</Card.Description>
             <Card.Description>{testResult.hasil == true ? "Positive" : "Negative"}</Card.Description>
           </Card.Content>
@@ -60,8 +60,11 @@ export const HistoryPage: FC = () => {
   const updateTestResults = (data: any[]) => {
     let testResultsResponse: TestResult[] = [];
     data.forEach((testResult: any) => {
+      const temp =  new Date(testResult.tanggal);
+      const tempdate = temp.getFullYear().toString() + "-" + (temp.getMonth() + 1).toString() + "-" + temp.getDate().toString() ;
+      console.log(tempdate);
       testResultsResponse.push({
-        date: testResult.tanggal,
+        date: tempdate,
         namaPengguna: testResult.namaPengguna,
         penyakit: testResult.namaPenyakit,
         hasil: testResult.hasil,
