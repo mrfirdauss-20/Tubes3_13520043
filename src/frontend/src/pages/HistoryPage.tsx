@@ -1,12 +1,12 @@
 import React, {FC, useState, useEffect} from "react";
-import {Button, Form, Header} from "semantic-ui-react";
+import { Form, Header, Card, Input, Button} from "semantic-ui-react";
 import {
   SearchQuery,
   TestResult
 } from "../state";
 import { searchTestHistory } from "../features/test/actions";
+import { convertDateUsingRegex } from "../utils/utilities";
 
-// import {useDispatch} from "react-redux";
 
 const initialState = {
   newSearchQuery: {date:"", penyakit:""},
@@ -17,29 +17,26 @@ export const HistoryPage: FC = () => {
   const [newSearchQuery, setNewSearchQuery] = useState<SearchQuery>(initialState.newSearchQuery)
   const [testResults, setTestResults] = useState<TestResult[]>(initialState.testResults)
 
-  const convertDateUsingRegex = (value: string) => {
-    const regDate = /\d{4}[-]\d{2}[-]\d{2}/g;
-    const date = value.match(regDate);
-    return date;
-  }
 
   const renderSearchHistory = () => {
     let resultContent: JSX.Element[] = [];
     testResults.forEach((testResult: TestResult) => {
       resultContent.push(
-        <div>
-          <div>{convertDateUsingRegex(testResult.date)}</div>
-          <div>{testResult.hasil == true ? "Positive" : "Negative"}</div>
-          <div>{testResult.penyakit}</div>
-          <div>{testResult.namaPengguna}</div>
-        </div>
+        <Card className="history-page-card-component">
+          <Card.Content>
+            <Card.Header>{testResult.namaPengguna}</Card.Header>
+            <Card.Meta>{testResult.date}</Card.Meta>
+            <Card.Description>{testResult.penyakit}</Card.Description>
+            <Card.Description>{testResult.hasil == true ? "Positive" : "Negative"}</Card.Description>
+          </Card.Content>
+        </Card>
       );
     });
 
     return (
-      <div>
+      <Card.Group className="history-page-card-group">
         {resultContent}
-      </div>
+      </Card.Group>
       )
   }
 
@@ -63,8 +60,11 @@ export const HistoryPage: FC = () => {
   const updateTestResults = (data: any[]) => {
     let testResultsResponse: TestResult[] = [];
     data.forEach((testResult: any) => {
+      const temp =  new Date(testResult.tanggal);
+      const tempdate = temp.getFullYear().toString() + "-" + (temp.getMonth() + 1).toString() + "-" + temp.getDate().toString() ;
+      console.log(tempdate);
       testResultsResponse.push({
-        date: testResult.tanggal,
+        date: tempdate,
         namaPengguna: testResult.namaPengguna,
         penyakit: testResult.namaPenyakit,
         hasil: testResult.hasil,
@@ -93,29 +93,36 @@ export const HistoryPage: FC = () => {
 
   return (
     <>
-      <Header as='h1' className="add-new-penyakit-title">
-        DNA History
-      </Header>
-      <Form>
-        <Form.Field>
-          <label>Predicted Disease</label>
-          <input
-            onChange={(val) => handleSearchQueryChange(val.currentTarget.value)}
-          />
-        </Form.Field>
-      </Form>
-      <Button onClick={handleSearchTestResult}>
-        Submit
-      </Button>
-      <Button onClick={handleResetButtonClicked}>
-        Reset
-      </Button>
-      {
-        testResults.length > 0 ?
-          renderSearchHistory()
-          :
-          <div>Tidak ada data</div>
-      }
+      <div className="history-page-content">
+        <Header as='h1' className="title">
+          DNA History
+        </Header>
+        <Form>
+          <Form.Field className="history-page-form-field">
+            <label>Predicted Disease</label>
+            <input
+              className="history-page-search-bar"
+              onChange={(val) => handleSearchQueryChange(val.currentTarget.value)}
+            />
+          </Form.Field>
+        </Form>
+        <div className="history-page-buttons">
+          <Button onClick={handleSearchTestResult} className="history-page-button">
+            Submit
+          </Button>
+          <Button onClick={handleResetButtonClicked} className="history-page-button">
+            Reset
+          </Button>
+        </div>
+
+        {
+          testResults.length > 0 ?
+            renderSearchHistory()
+            :
+            <div>Tidak ada data</div>
+        }
+      </div>
+
     </>
 
   )

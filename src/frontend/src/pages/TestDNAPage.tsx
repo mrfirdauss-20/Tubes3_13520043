@@ -1,9 +1,10 @@
-import React, {FC, useState} from "react";
-import {Button, Form, Header} from "semantic-ui-react";
+import React, { FC, useCallback, useState } from "react";
+import { Button, Card, Form, Header, Label, Message } from "semantic-ui-react";
 import {
-  NewTestDNA
+  NewTestDNA, TestResult
 } from "../state";
-import { storeNewPenyakit, submitTesDNA } from "../features/test/actions";
+import { submitTesDNA } from "../features/test/actions";
+import { convertDateUsingRegex, isValidSequenceDNA } from "../utils/utilities";
 
 // import {useDispatch} from "react-redux";
 
@@ -13,11 +14,32 @@ interface TestDNAProps {
   newTestDNA: NewTestDNA
 }
 
+const initialState = {
+  newTestDNA: { namaPengguna: "", sequenceDNA: "", prediksiPenyakit: "" },
+  testResult: { date: "", namaPengguna: "", penyakit: "", hasil: true }
+}
+
 export const TestDNAPage: FC<TestDNAProps>  = () => {
   //const dispatch = useDispatch();
-  const [newTestDNA, setNewTestDNA] = useState<NewTestDNA>({namaPengguna:"", sequenceDNA:"", prediksiPenyakit:""})
+  const [newTestDNA, setNewTestDNA] = useState<NewTestDNA>(initialState.newTestDNA);
+  const [testResult, setTestResult] = useState<TestResult>(initialState.testResult);
+  
+  const [invalidSequenceDNA, setInvalidSequenceDNA] = useState(false);
 
   let fileReader: FileReader;
+
+  // const renderTestResult = () => {
+  //     return(
+  //       <Card className="history-page-card-component">
+  //         <Card.Content>
+  //           <Card.Header>{testResult.namaPengguna}</Card.Header>
+  //           <Card.Meta>{convertDateUsingRegex(testResult.date)}</Card.Meta>
+  //           <Card.Description>{testResult.penyakit}</Card.Description>
+  //           <Card.Description>{testResult.hasil == true ? "Positive" : "Negative"}</Card.Description>
+  //         </Card.Content>
+  //       </Card>
+  //       )
+  // };
 
   const handleFileRead = () => {
     const content = fileReader.result;
@@ -44,20 +66,37 @@ export const TestDNAPage: FC<TestDNAProps>  = () => {
     setNewTestDNA(updatedNewTestDNA);
   }
 
+  const updateTestResult = (data: any) => {
+    let testResultsResponse = {...initialState.testResult};
+    testResultsResponse.date =  data.tanggal;
+    testResultsResponse.namaPengguna = data.namaPengguna;
+    testResultsResponse.penyakit = data. namaPenyakit;
+    testResultsResponse.hasil = data.hasil;
+    setTestResult(testResultsResponse);
+  }
+
   const handleAddNewTestDNA = async () => {
+    setInvalidSequenceDNA(false);
     try {
+      isValidSequenceDNA(newTestDNA.sequenceDNA);
       let response = await submitTesDNA(newTestDNA);
-      console.log(response);
+      if (response.status == 404){
+        return (<Message warning><Message.Header>Data penyakit tidak ada</Message.Header></Message>)
+      } else{
+        updateTestResult(response.data.data[0]);
+
+      }
     }
     catch (e: any){
       console.log(e.message);
-      console.log("Error")
+      console.log("Error");
+      setInvalidSequenceDNA(true);
     }
   }
 
   return (
     <>
-      <Header as='h1' className="add-new-penyakit-title">
+      <Header as='h1' className="title">
         Test Your DNA!
       </Header>
       <Form>
@@ -72,12 +111,12 @@ export const TestDNAPage: FC<TestDNAProps>  = () => {
           <input
             type = 'file'
             onChange={
-            (event) =>
-              event.currentTarget.files ?
-              handleFileChosen(event.currentTarget.files[0])
-              :
-              console.log("a")}
+            (event) =>{
+            if(event.currentTarget.files) handleFileChosen(event.currentTarget.files[0])}}
           />
+          <Message warning visible={invalidSequenceDNA}>
+            <Message.Header>Invalid DNA Sequence!</Message.Header>
+          </Message>
         </Form.Field>
         <Form.Field>
           <label>Predicted Disease</label>
@@ -89,6 +128,21 @@ export const TestDNAPage: FC<TestDNAProps>  = () => {
       <Button onClick={handleAddNewTestDNA}>
         Submit
       </Button>
+      {        console.log("130", testResult)}
+      {
+        testResult.date != "" ?
+        <Card className="history-page-card-component">
+          <Card.Content>
+          <Card.Header>{testResult.namaPengguna}</Card.Header>
+          <Card.Meta>{convertDateUsingRegex(testResult.date)}</Card.Meta>
+          <Card.Description>{testResult.penyakit}</Card.Description>
+          <Card.Description>{testResult.hasil == true ? "Positive" : "Negative"}</Card.Description>
+          </Card.Content>
+        </Card>
+      :
+          console.log("142")
+      }
+
     </>
 
   )
