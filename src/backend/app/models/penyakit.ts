@@ -4,7 +4,7 @@ import { PencarianP } from "app/types/Pencarian";
 import { db } from "../db/db";
 import { RowDataPacket } from "mysql2";
 import e from "express";
-import { BoyerMoore, KnuthMorrisPratt } from "../lib/string_matcher";
+import { BoyerMoore, KnuthMorrisPratt, levensthein } from "../lib/string_matcher";
 
 export const insertNilaiBorder = async (idPenyakit: number, sequence: string, callback: Function) => {
   const queryStr = "INSERT INTO nilai_border (id_penyakit, nilai_border) VALUE (?,?);";
@@ -90,13 +90,14 @@ export const findSimilar = async (namaPengguna: string, namaPenyakit: string, se
         sequence
       )
       const tanggal = new Date();
+      const kemiripan = levensthein(pepenyakit[0].sequence, sequence);
       // insert data
-      const queryStr = "INSERT INTO hasil_tes (id_penyakit,tanggal,nama_pengguna,hasil) VALUES (?,?,?,?);";
+      const queryStr = "INSERT INTO hasil_tes (id_penyakit,tanggal,nama_pengguna,hasil,kemiripan) VALUES (?,?,?,?,?);";
       const isValid = hasil == -1 ? 0 : 1
       const hasil_tes : PencarianP []= [];
       db.query(
         queryStr,
-        [pepenyakit[0].id,tanggal,namaPengguna, isValid ],
+        [pepenyakit[0].id,tanggal,namaPengguna, isValid,kemiripan],
         (err, results) => {
           if(err){
             callback(err);
@@ -106,7 +107,8 @@ export const findSimilar = async (namaPengguna: string, namaPenyakit: string, se
             namaPenyakit: namaPenyakit,
             tanggal: tanggal,
             namaPengguna: namaPengguna,
-            hasil: isValid
+            hasil: isValid,
+            kemiripan: kemiripan
           }
           console.log(search)
           callback(null,[search])

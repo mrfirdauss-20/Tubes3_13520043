@@ -27,6 +27,6 @@ id_penyakit INT,
 tanggal DATE NOT NULL,
 nama_pengguna VARCHAR(30) NOT NULL,
 hasil TINYINT(1) NOT NULL,
-kemiripan INT,
+kemiripan FLOAT,
 FOREIGN KEY (id_penyakit) REFERENCES penyakit(id)
 );

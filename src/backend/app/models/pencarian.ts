@@ -2,6 +2,7 @@ import { PencarianP } from "../types/Pencarian";
 import { db } from "../db/db";
 import { RowDataPacket } from "mysql2";
 import { Penyakit } from "app/types/Penyakit";
+import { levensthein } from "app/lib/string_matcher";
 
 
 export const findAll = async (callback: Function) => {
@@ -16,7 +17,8 @@ export const findAll = async (callback: Function) => {
                 namaPenyakit: row.nama_penyakit,
                 tanggal: row.tanggal,
                 namaPengguna: row.nama_pengguna,
-                hasil: row.hasil
+                hasil: row.hasil,
+                kemiripan: row.kemiripan
             }
             pepenyakit.push(hasil);
         })
@@ -47,7 +49,8 @@ export const findByNamaPenyakitAndTanggal = async (namaPenyakit: string, tanggal
                 namaPenyakit: row.nama_penyakit,
                 tanggal: row.tanggal,
                 namaPengguna: row.nama_pengguna,
-                hasil: row.hasil
+                hasil: row.hasil,
+                kemiripan: row.kemiripan
             }
             pepenyakit.push(hasil);
         })
