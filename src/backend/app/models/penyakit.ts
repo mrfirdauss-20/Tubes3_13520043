@@ -77,7 +77,7 @@ export const findSimilar = async (namaPengguna: string, namaPenyakit: string, se
           id: row.id,
           nama: row.nama_penyakit,
           sequence: row.sequence
-        }
+                }
         pepenyakit.push(hasil);
       });
       // drop string comparing function here

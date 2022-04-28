@@ -16,6 +16,7 @@ checkRouter.post("/", async (req: Request, res: Response) =>{
             return res.status(500).json({"messages": "Internal server error"});
         }
 
+        console.log(results);
         //ini nyesuaiin dari ave
         if(results.length == 0){
             res.status(404).json({"messages": "Data not found"});
