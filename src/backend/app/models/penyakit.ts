@@ -90,14 +90,19 @@ export const findSimilar = async (namaPengguna: string, namaPenyakit: string, se
         sequence
       )
       const tanggal = new Date();
-      const kemiripan = levensthein(pepenyakit[0].sequence, sequence);
+      var kemiripan:number;
+      if(pepenyakit[0].sequence.length>sequence.length){
+        kemiripan = 1-levensthein(pepenyakit[0].sequence, sequence)/pepenyakit[0].sequence.length;
+      }else{
+        kemiripan = 1- levensthein(pepenyakit[0].sequence, sequence)/sequence.length;
+      }
       // insert data
       const queryStr = "INSERT INTO hasil_tes (id_penyakit,tanggal,nama_pengguna,hasil,kemiripan) VALUES (?,?,?,?,?);";
-      const isValid = hasil == -1 ? 0 : 1
+      const isValid = hasil == -1 ? (kemiripan<0.8 ? 0 : 1 ) : 1
       const hasil_tes : PencarianP []= [];
       db.query(
         queryStr,
-        [pepenyakit[0].id,tanggal,namaPengguna, isValid,kemiripan],
+        [pepenyakit[0].id,tanggal,namaPengguna, isValid,1-kemiripan],
         (err, results) => {
           if(err){
             callback(err);
