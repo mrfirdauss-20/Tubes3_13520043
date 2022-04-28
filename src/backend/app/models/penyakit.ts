@@ -3,7 +3,7 @@ import { PencarianP } from "app/types/Pencarian";
 
 import { db } from "../db/db";
 import { RowDataPacket } from "mysql2";
-import e from "express";
+
 import { BoyerMoore, KnuthMorrisPratt, levensthein } from "../lib/string_matcher";
 
 export const insertNilaiBorder = async (idPenyakit: number, sequence: string, callback: Function) => {
