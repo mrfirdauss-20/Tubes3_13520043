@@ -102,7 +102,7 @@ export const findSimilar = async (namaPengguna: string, namaPenyakit: string, se
       const hasil_tes : PencarianP []= [];
       db.query(
         queryStr,
-        [pepenyakit[0].id,tanggal,namaPengguna, isValid,1-kemiripan],
+        [pepenyakit[0].id,tanggal,namaPengguna, isValid, kemiripan],
         (err, results) => {
           if(err){
             callback(err);
