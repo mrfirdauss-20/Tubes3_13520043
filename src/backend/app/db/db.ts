@@ -5,8 +5,8 @@ dotenv.config();
 
 
 export const db = mysql.createConnection({
-    host: "remotemysql.com",
-    user: "hWlcM5nsT1",
-    password: "6talWDyWzq",
-    database: "hWlcM5nsT1"
+    host: "localhost",
+    user: "root",
+    password: "mysqlaws009A",
+    database: "tubes3"
 });
