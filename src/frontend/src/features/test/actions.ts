@@ -32,7 +32,7 @@ export const storeNewPenyakit =
   async (newPenyakit : NewPenyakit
   ) => {
     const URL_PATH = "penyakit";
-    const url = "http://localhost:5000/" + URL_PATH;
+    const url = "https://tubes3-13520043.herokuapp.com/" + URL_PATH;
     return (
       axios({
         method: "post",
@@ -51,7 +51,7 @@ export const submitTesDNA =
   async (newTestDNA : NewTestDNA
   ) => {
     const URL_PATH = "similarity";
-    const url = "http://localhost:5000/" + URL_PATH;
+    const url = "https://tubes3-13520043.herokuapp.com/" + URL_PATH;
     return (
       axios({
         method: "post",
@@ -71,7 +71,7 @@ export const searchTestHistory =
   async (searchQuery: SearchQuery
   ) => {
     const URL_PATH = "search";
-    const url = "http://localhost:5000/" + URL_PATH;
+    const url = "https://tubes3-13520043.herokuapp.com/" + URL_PATH;
     return (
       axios({
         method: "post",
