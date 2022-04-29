@@ -42,13 +42,13 @@ export const HistoryPage: FC = () => {
   const convertQueryToRegex = (value: string) =>
   {
     const regDate = /\d{4}[-]\d{2}[-]\d{2}/g;
-    const regPenyakit = /[^\d\W]+/i;
+    const regPenyakit = /[A-Za-z]+[\s\w\d]+/i;
     const date = value.match(regDate);
     const penyakit = value.match(regPenyakit);
 
     let updatedNewSearchQuery = {date:"", penyakit:""};
     if(date) updatedNewSearchQuery.date = date.toString();
-    if (penyakit) updatedNewSearchQuery.penyakit = penyakit.toString();
+    if (penyakit) updatedNewSearchQuery.penyakit = penyakit.toString().trim();
     setNewSearchQuery(updatedNewSearchQuery);
   }
 
