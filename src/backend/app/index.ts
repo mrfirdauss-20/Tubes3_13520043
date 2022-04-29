@@ -14,12 +14,12 @@ app.use(express.urlencoded({extended: true}))
 app.use(express.json());
 
 const cors = require('cors')
-app.use(
-  cors({
-      origin: 'http://localhost:3000'
-  }))
-
-//-> ini post jadi kirimnya pake form 
+  app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+    });
+//-> inai post jadi kirimnya pake form 
 app.use("/similarity", checkRouter);
 
 // localhost:3000/search/?nama_penyakit=penyakit&tanggal=2020-01-01
