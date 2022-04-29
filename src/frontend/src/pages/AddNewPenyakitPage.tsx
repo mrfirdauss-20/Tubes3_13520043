@@ -67,12 +67,14 @@ export const AddNewPenyakitPage: FC<AddNewPenyakitProps>  = () => {
         <Form.Field>
           <label>Disease</label>
           <Input
+            className="text-input"
             onChange={(val) => handleNamaPenyakitValueChange(val.currentTarget.value)}
           />
         </Form.Field>
         <Form.Field>
           <label>Sequence DNA</label>
           <Input
+            className= "input-file"
             type = 'file'
             onChange={
               (event) =>

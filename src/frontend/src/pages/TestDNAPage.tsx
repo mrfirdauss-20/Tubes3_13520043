@@ -110,6 +110,7 @@ export const TestDNAPage: FC<TestDNAProps>  = () => {
           <label>Sequence DNA</label>
           <input
             type = 'file'
+            className= "input-file"
             onChange={
             (event) =>{
             if(event.currentTarget.files) handleFileChosen(event.currentTarget.files[0])}}

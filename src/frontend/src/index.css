@@ -54,6 +54,7 @@ code {
 .history-page-card-group {
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 .history-page-card-component {
   width: 60% !important;
@@ -81,6 +82,10 @@ input {
 
 .info-text {
   color: white;
+}
+
+.input-file {
+  width: 40% !important;
 }
 
 
