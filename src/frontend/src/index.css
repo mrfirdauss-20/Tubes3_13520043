@@ -1,10 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: -apple-system, BlinkMacSystemFont, 'Poppins', 'Lato', 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #24292e !important;
 }
 
 code {
@@ -21,3 +23,69 @@ code {
   display: flex;
   justify-content: space-between;
 }
+
+.title {
+  font-family: 'Poppins', 'SansSerif' !important;
+  font-weight: 700 !important;
+  font-size: 50px !important;
+  text-align: center !important;
+  margin-top: 30px !important;
+  color: #85e89d !important;
+}
+.history-page-content {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  text-align: center;
+}
+.history-page-search-bar {
+  width: 100% !important;
+  height: 20px !important;
+}
+.history-page-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin:10px;
+}
+.history-page-button {
+  width: 100px !important;
+}
+.history-page-card-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.history-page-card-component {
+  width: 60% !important;
+  height: 100px;
+}
+nav {
+  background-color: #444d56 !important;
+}
+
+a:hover {
+  color: #ffab70 !important;
+}
+
+label {
+  color: #959da5 !important;
+}
+
+input {
+  background-color: #e1e4e8 !important;
+}
+
+.submit-button {
+  margin-top: 10px !important;
+}
+
+.info-text {
+  color: white;
+}
+
+.input-file {
+  width: 40% !important;
+}
+
+

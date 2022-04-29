@@ -1,20 +1,27 @@
 import React, {FC, useState} from "react";
-import {Button, Form, Header} from "semantic-ui-react";
+import { Button, Form, Header, Input, Label, Message } from "semantic-ui-react";
 // import {useDispatch} from "react-redux";
 import {
   NewPenyakit
 } from "../state";
+import { storeNewPenyakit } from "../features/actions";
+import { isValidSequenceDNA } from "../utils/utilities";
 
 export interface AddNewPenyakitProps {
   handleAddNewPenyakit: () => void;
   newPenyakit: NewPenyakit
 }
 
+const initialState = {
+  newPenyakit: {namaPenyakit:"", sequenceDNA:""}
+}
 export const AddNewPenyakitPage: FC<AddNewPenyakitProps>  = () => {
-  //const dispatch = useDispatch();
-  const [newPenyakit, setNewPenyakit] = useState<NewPenyakit>({namaPenyakit:"", sequenceDNA:""})
-
+  const [newPenyakit, setNewPenyakit] = useState<NewPenyakit>(initialState.newPenyakit)
+  const [invalidSequenceDNA, setInvalidSequenceDNA] = useState(false);
+  const [addNewPenyakitSucceeded, setAddNewPenyakitSucceeded] = useState(false);
   let fileReader: FileReader;
+
+
 
   const handleFileRead = () => {
     const content = fileReader.result;
@@ -30,31 +37,44 @@ export const AddNewPenyakitPage: FC<AddNewPenyakitProps>  = () => {
   };
 
   const handleNamaPenyakitValueChange = (value: string) => {
+    setAddNewPenyakitSucceeded(false);
     const updatedNewPenyakit = {...newPenyakit};
     updatedNewPenyakit.namaPenyakit = value;
     setNewPenyakit(updatedNewPenyakit);
   }
 
-
-  const handleAddNewPenyakit = () => {
-    console.log("New Penyakit Added")
+  const handleAddNewPenyakit = async () => {
+    setInvalidSequenceDNA(false);
+    try {
+      isValidSequenceDNA(newPenyakit.sequenceDNA);
+      await storeNewPenyakit(newPenyakit);
+      setNewPenyakit(initialState.newPenyakit);
+      setAddNewPenyakitSucceeded(true);
+    }
+    catch (e: any){
+      if (e.message != "Network Error") {
+        setInvalidSequenceDNA(true);
+      }
+    }
   }
 
   return (
     <>
-      <Header as='h1' className="add-new-penyakit-title">
+      <Header as='h1' className="title">
         Add New Disease
       </Header>
       <Form>
         <Form.Field>
           <label>Disease</label>
-          <input
+          <Input
+            className="text-input"
             onChange={(val) => handleNamaPenyakitValueChange(val.currentTarget.value)}
           />
         </Form.Field>
         <Form.Field>
           <label>Sequence DNA</label>
-          <input
+          <Input
+            className= "input-file"
             type = 'file'
             onChange={
               (event) =>
@@ -63,11 +83,17 @@ export const AddNewPenyakitPage: FC<AddNewPenyakitProps>  = () => {
                   :
                   console.log("a")}
           />
+        <Message warning visible={invalidSequenceDNA}>
+          <Message.Header>Invalid DNA Sequence!</Message.Header>
+        </Message>
         </Form.Field>
       </Form>
-      <Button onClick={handleAddNewPenyakit}>
+      <Button onClick={handleAddNewPenyakit} className="submit-button">
         Submit
       </Button>
+      {/*<Message visible={addNewPenyakitSucceeded}>*/}
+      {/*  <Message.Header>A new disease has been successfully added!</Message.Header>*/}
+      {/*</Message>*/}
     </>
 
   )
