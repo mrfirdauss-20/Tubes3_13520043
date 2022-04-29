@@ -4,7 +4,7 @@ import {
 } from "../state";
 import axios from "axios";
 
-const REACT_URL = "https://localhost:5000";
+const REACT_URL = "http://localhost:5000/";
 // const REACT_URL = "http://tubes3-13520043.herokuapp.com/" ;
 
 export const storeNewPenyakit =

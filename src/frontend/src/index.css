@@ -54,11 +54,14 @@ code {
 .history-page-card-group {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-content: center !important;
 }
 .history-page-card-component {
-  width: 60% !important;
+  width: 30% !important;
   height: 100px;
+  justify-content: center !important;
+  alignment: center !important;
+  background-color: #ffab70 !important;
 }
 nav {
   background-color: #444d56 !important;

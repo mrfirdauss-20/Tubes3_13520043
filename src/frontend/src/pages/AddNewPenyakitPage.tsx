@@ -1,5 +1,5 @@
 import React, {FC, useState} from "react";
-import { Button, Form, Header, Input, Label, Message } from "semantic-ui-react";
+import { Button, Form, Header, Input, Message } from "semantic-ui-react";
 // import {useDispatch} from "react-redux";
 import {
   NewPenyakit
@@ -18,7 +18,6 @@ const initialState = {
 export const AddNewPenyakitPage: FC<AddNewPenyakitProps>  = () => {
   const [newPenyakit, setNewPenyakit] = useState<NewPenyakit>(initialState.newPenyakit)
   const [invalidSequenceDNA, setInvalidSequenceDNA] = useState(false);
-  const [addNewPenyakitSucceeded, setAddNewPenyakitSucceeded] = useState(false);
   let fileReader: FileReader;
 
 
@@ -37,7 +36,6 @@ export const AddNewPenyakitPage: FC<AddNewPenyakitProps>  = () => {
   };
 
   const handleNamaPenyakitValueChange = (value: string) => {
-    setAddNewPenyakitSucceeded(false);
     const updatedNewPenyakit = {...newPenyakit};
     updatedNewPenyakit.namaPenyakit = value;
     setNewPenyakit(updatedNewPenyakit);
@@ -49,7 +47,7 @@ export const AddNewPenyakitPage: FC<AddNewPenyakitProps>  = () => {
       isValidSequenceDNA(newPenyakit.sequenceDNA);
       await storeNewPenyakit(newPenyakit);
       setNewPenyakit(initialState.newPenyakit);
-      setAddNewPenyakitSucceeded(true);
+
     }
     catch (e: any){
       if (e.message != "Network Error") {
@@ -91,9 +89,7 @@ export const AddNewPenyakitPage: FC<AddNewPenyakitProps>  = () => {
       <Button onClick={handleAddNewPenyakit} className="submit-button">
         Submit
       </Button>
-      {/*<Message visible={addNewPenyakitSucceeded}>*/}
-      {/*  <Message.Header>A new disease has been successfully added!</Message.Header>*/}
-      {/*</Message>*/}
+
     </>
 
   )
