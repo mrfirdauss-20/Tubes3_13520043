@@ -33,7 +33,7 @@
 
 
 ## Tangkapan layar
-![Laman Utama](./img/lamanutama.png)
+![Laman Utama](./lamanutama.png)
 <!-- If you have screenshots you'd like to share, include them here. -->
 
 
