@@ -5,17 +5,19 @@ dotenv.config();
 
 
 export const db = mysql.createConnection({
-    host: "remotemysql.com",
-    user: "hWlcM5nsT1",
-    password: "6talWDyWzq",
-    database: "hWlcM5nsT1"
+    host: "mysql-77463-0.cloudclusters.net",
+    port: 10156,
+    user: "admin",
+    password: "L47Sd8iH",
+    database: "tubes3"
 });
 
 var db_config={
-    host: "remotemysql.com",
-    user: "hWlcM5nsT1",
-    password: "6talWDyWzq",
-    database: "hWlcM5nsT1"  
+    host: "mysql-77463-0.cloudclusters.net",
+    user: "admin",
+    password: "L47Sd8iH",
+    port: 10156,
+    database: "tubes3"  
 }
 
 var connection
