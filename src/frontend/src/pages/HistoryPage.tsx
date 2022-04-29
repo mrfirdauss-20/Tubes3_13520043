@@ -4,7 +4,7 @@ import {
   SearchQuery,
   TestResult
 } from "../state";
-import { searchTestHistory } from "../features/test/actions";
+import { searchTestHistory } from "../features/actions";
 import { convertDateUsingRegex } from "../utils/utilities";
 
 

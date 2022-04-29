@@ -4,7 +4,7 @@ import { Button, Form, Header, Input, Label, Message } from "semantic-ui-react";
 import {
   NewPenyakit
 } from "../state";
-import { storeNewPenyakit } from "../features/test/actions";
+import { storeNewPenyakit } from "../features/actions";
 import { isValidSequenceDNA } from "../utils/utilities";
 
 export interface AddNewPenyakitProps {

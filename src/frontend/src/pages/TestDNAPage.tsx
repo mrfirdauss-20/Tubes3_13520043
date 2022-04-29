@@ -3,7 +3,7 @@ import { Button, Card, Form, Header, Label, Message } from "semantic-ui-react";
 import {
   NewTestDNA, TestResult
 } from "../state";
-import { submitTesDNA } from "../features/test/actions";
+import { submitTesDNA } from "../features/actions";
 import { convertDateUsingRegex, isValidSequenceDNA } from "../utils/utilities";
 
 // import {useDispatch} from "react-redux";
