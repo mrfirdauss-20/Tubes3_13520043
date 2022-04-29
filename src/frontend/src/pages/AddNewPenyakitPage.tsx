@@ -52,9 +52,9 @@ export const AddNewPenyakitPage: FC<AddNewPenyakitProps>  = () => {
       setAddNewPenyakitSucceeded(true);
     }
     catch (e: any){
-      if (e.message != "Network Error")
-      console.log(e.message);
-      setInvalidSequenceDNA(true);
+      if (e.message != "Network Error") {
+        setInvalidSequenceDNA(true);
+      }
     }
   }
 
