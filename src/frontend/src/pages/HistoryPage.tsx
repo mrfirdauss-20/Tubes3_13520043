@@ -1,11 +1,10 @@
-import React, {FC, useState, useEffect} from "react";
-import { Form, Header, Card, Input, Button} from "semantic-ui-react";
+import React, {FC, useState} from "react";
+import { Form, Header, Card, Button} from "semantic-ui-react";
 import {
   SearchQuery,
   TestResult
 } from "../state";
 import { searchTestHistory } from "../features/actions";
-import { convertDateUsingRegex } from "../utils/utilities";
 
 
 const initialState = {
@@ -27,7 +26,7 @@ export const HistoryPage: FC = () => {
             <Card.Header>{testResult.namaPengguna}</Card.Header>
             <Card.Meta>{testResult.date}</Card.Meta>
             <Card.Description>{testResult.penyakit}</Card.Description>
-            <Card.Description>{testResult.hasil == true ? "Positive" : "Negative"}</Card.Description>
+            <Card.Description>{testResult.hasil? "Positive" : "Negative"}</Card.Description>
           </Card.Content>
         </Card>
       );
