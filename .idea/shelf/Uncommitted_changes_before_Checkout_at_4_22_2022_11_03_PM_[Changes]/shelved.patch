@@ -1,0 +1,17 @@
+Index: src/frontend/src/components/addPenyakitPage.tsx
+===================================================================
+diff --git a/src/frontend/src/components/addPenyakitPage.tsx b/src/frontend/src/components/addPenyakitPage.tsx
+--- a/src/frontend/src/components/addPenyakitPage.tsx	
++++ b/src/frontend/src/components/addPenyakitPage.tsx	
+@@ -1,0 +1,11 @@
++import React, {memo, useMemo} from "react";
++import {Button, Icon, Image, Popup} from "semantic-ui-react";
++import {RouteComponentProps} from "react-router";
++
++interface addPenyakitPageProps extends RouteComponentProps<any>{
++  handleAddNewPenyakit:
++}
++const addPenyakitPage: React.FC<addPenyakitPageProps> = (
++<Button>
++  blabla
++</Button>
