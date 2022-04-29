@@ -1,0 +1,140 @@
+-- MariaDB dump 10.19  Distrib 10.6.5-MariaDB, for Win64 (AMD64)
+--
+-- Host: localhost    Database: tubes3
+-- ------------------------------------------------------
+-- Server version	10.6.5-MariaDB
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Current Database: `tubes3`
+--
+
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `tubes3` /*!40100 DEFAULT CHARACTER SET latin1 */;
+
+USE `tubes3`;
+
+--
+-- Table structure for table `hasil_tes`
+--
+
+DROP TABLE IF EXISTS `hasil_tes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `hasil_tes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_penyakit` int(11) DEFAULT NULL,
+  `tanggal` date NOT NULL,
+  `nama_pengguna` varchar(30) NOT NULL,
+  `hasil` tinyint(1) NOT NULL,
+  `kemiripan` float DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_penyakit` (`id_penyakit`),
+  CONSTRAINT `hasil_tes_ibfk_1` FOREIGN KEY (`id_penyakit`) REFERENCES `penyakit` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `hasil_tes`
+--
+
+LOCK TABLES `hasil_tes` WRITE;
+/*!40000 ALTER TABLE `hasil_tes` DISABLE KEYS */;
+INSERT INTO `hasil_tes` (`id`, `id_penyakit`, `tanggal`, `nama_pengguna`, `hasil`, `kemiripan`) VALUES (1,1,'2022-04-29','Bukan aku',1,1),(2,1,'2022-04-29','Bukan aku',1,1),(3,1,'2022-04-29','loh',1,1),(4,1,'2022-04-29','nama',1,1),(5,2,'2022-04-29','orang1',0,0.388889),(6,2,'2022-04-29','orang2',1,0.444444),(7,3,'2022-04-29','orang 2',1,0.736842),(8,3,'2022-04-29','orang 3',1,0.857143),(9,3,'2022-04-29','orang 4',0,0.52381),(10,3,'2022-04-29','orang 4',0,0.52381),(11,4,'2022-04-29','orang 2',1,0.736842),(12,4,'2022-04-29','orang 3',1,0.857143),(13,4,'2022-04-29','orang 4',0,0.52381),(14,4,'2022-04-29','orang 4',0,0.52381),(15,4,'2022-04-29','orang 4',0,0.52381),(16,4,'2022-04-29','orang 4',0,0.52381),(17,4,'2022-04-29','orang 2',1,0.736842),(18,4,'2022-04-29','orang 3',1,0.857143),(19,4,'2022-04-29','orang 4',0,0.52381),(20,4,'2022-04-29','orang 4',0,0.52381),(21,4,'2022-04-29','orang 4',0,0.52381),(22,4,'2022-04-29','orang 4',0,0.52381);
+/*!40000 ALTER TABLE `hasil_tes` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `nilai_border`
+--
+
+DROP TABLE IF EXISTS `nilai_border`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `nilai_border` (
+  `id_penyakit` int(11) DEFAULT NULL,
+  `nilai_border` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`nilai_border`)),
+  KEY `id_penyakit` (`id_penyakit`),
+  CONSTRAINT `nilai_border_ibfk_1` FOREIGN KEY (`id_penyakit`) REFERENCES `penyakit` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `nilai_border`
+--
+
+LOCK TABLES `nilai_border` WRITE;
+/*!40000 ALTER TABLE `nilai_border` DISABLE KEYS */;
+INSERT INTO `nilai_border` (`id_penyakit`, `nilai_border`) VALUES (1,'[0,1,2,3,3,3,3,3,3,3,3,3,1,1,1,1,1,1,1,1,1,1,1,1,2,3,4,4]'),(2,'[0,0,0,0,0,0,0]'),(3,'[0,0,0,0,1,1,1,1,1,1,1,1,1]'),(4,'[0,0,0,0,1,1,1,1,1,1,1,1,1]');
+/*!40000 ALTER TABLE `nilai_border` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `penyakit`
+--
+
+DROP TABLE IF EXISTS `penyakit`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `penyakit` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nama` varchar(255) NOT NULL,
+  `sequence` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `penyakit`
+--
+
+LOCK TABLES `penyakit` WRITE;
+/*!40000 ALTER TABLE `penyakit` DISABLE KEYS */;
+INSERT INTO `penyakit` (`id`, `nama`, `sequence`) VALUES (1,'HIV','AAAAGGGTTTCCAGTCGTTTTATAAAAAA'),(2,'penyakittubes','TAGGGAAA'),(3,'tubez','ACGTAGCTAGATCG'),(4,'tubez melitus','ACGTAGCTAGATCG');
+/*!40000 ALTER TABLE `penyakit` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `peta_last_occurence`
+--
+
+DROP TABLE IF EXISTS `peta_last_occurence`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `peta_last_occurence` (
+  `id_penyakit` int(11) DEFAULT NULL,
+  `peta_last_occurence` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`peta_last_occurence`)),
+  KEY `id_penyakit` (`id_penyakit`),
+  CONSTRAINT `peta_last_occurence_ibfk_1` FOREIGN KEY (`id_penyakit`) REFERENCES `penyakit` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `peta_last_occurence`
+--
+
+LOCK TABLES `peta_last_occurence` WRITE;
+/*!40000 ALTER TABLE `peta_last_occurence` DISABLE KEYS */;
+INSERT INTO `peta_last_occurence` (`id_penyakit`, `peta_last_occurence`) VALUES (1,'{}'),(2,'{}'),(3,'{}'),(4,'{}');
+/*!40000 ALTER TABLE `peta_last_occurence` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2022-04-29 23:47:15

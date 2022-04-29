@@ -10,7 +10,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="frontend-develop" />
+        <entry key="$PROJECT_DIR$" value="frontend-build" />
         <entry key="$PROJECT_DIR$/../../../Work/lci-ui" value="#ah-59_create_process_detail_sidebar" />
       </map>
     </option>
@@ -62,7 +62,7 @@
       <workItem from="1650726904210" duration="6867000" />
       <workItem from="1650735840542" duration="196000" />
       <workItem from="1650736044001" duration="92000" />
-      <workItem from="1651233740770" duration="6556000" />
+      <workItem from="1651233740770" duration="7424000" />
     </task>
     <servers />
   </component>
