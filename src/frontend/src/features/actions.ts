@@ -4,11 +4,14 @@ import {
 } from "../state";
 import axios from "axios";
 
+const REACT_URL = "https://localhost:5000";
+// const REACT_URL = "http://tubes3-13520043.herokuapp.com/" ;
+
 export const storeNewPenyakit =
   async (newPenyakit : NewPenyakit
   ) => {
     const URL_PATH = "penyakit";
-    const url = "https://tubes3-13520043.herokuapp.com/" + URL_PATH;
+    const url = REACT_URL+ URL_PATH;
     return (
       axios({
         method: "post",
@@ -27,7 +30,7 @@ export const submitTesDNA =
   async (newTestDNA : NewTestDNA
   ) => {
     const URL_PATH = "similarity";
-    const url = "https://tubes3-13520043.herokuapp.com/" + URL_PATH;
+    const url = REACT_URL+ URL_PATH;
     return (
       axios({
         method: "post",
@@ -47,7 +50,7 @@ export const searchTestHistory =
   async (searchQuery: SearchQuery
   ) => {
     const URL_PATH = "search";
-    const url = "https://tubes3-13520043.herokuapp.com/" + URL_PATH;
+    const url = REACT_URL + URL_PATH;
     return (
       axios({
         method: "post",
