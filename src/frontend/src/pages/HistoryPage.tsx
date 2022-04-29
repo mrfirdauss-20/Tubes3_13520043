@@ -119,7 +119,7 @@ export const HistoryPage: FC = () => {
           testResults.length > 0 ?
             renderSearchHistory()
             :
-            <div>Tidak ada data</div>
+            <div className="info-text">Tidak ada data</div>
         }
       </div>
 

@@ -18,7 +18,7 @@ const initialState = {
 export const AddNewPenyakitPage: FC<AddNewPenyakitProps>  = () => {
   const [newPenyakit, setNewPenyakit] = useState<NewPenyakit>(initialState.newPenyakit)
   const [invalidSequenceDNA, setInvalidSequenceDNA] = useState(false);
-
+  const [addNewPenyakitSucceeded, setAddNewPenyakitSucceeded] = useState(false);
   let fileReader: FileReader;
 
 
@@ -37,6 +37,7 @@ export const AddNewPenyakitPage: FC<AddNewPenyakitProps>  = () => {
   };
 
   const handleNamaPenyakitValueChange = (value: string) => {
+    setAddNewPenyakitSucceeded(false);
     const updatedNewPenyakit = {...newPenyakit};
     updatedNewPenyakit.namaPenyakit = value;
     setNewPenyakit(updatedNewPenyakit);
@@ -48,12 +49,12 @@ export const AddNewPenyakitPage: FC<AddNewPenyakitProps>  = () => {
       isValidSequenceDNA(newPenyakit.sequenceDNA);
       await storeNewPenyakit(newPenyakit);
       setNewPenyakit(initialState.newPenyakit);
+      setAddNewPenyakitSucceeded(true);
     }
     catch (e: any){
+      if (e.message != "Network Error")
       console.log(e.message);
-      console.log("Error");
       setInvalidSequenceDNA(true);
-
     }
   }
 
@@ -85,9 +86,12 @@ export const AddNewPenyakitPage: FC<AddNewPenyakitProps>  = () => {
         </Message>
         </Form.Field>
       </Form>
-      <Button onClick={handleAddNewPenyakit}>
+      <Button onClick={handleAddNewPenyakit} className="submit-button">
         Submit
       </Button>
+      {/*<Message visible={addNewPenyakitSucceeded}>*/}
+      {/*  <Message.Header>A new disease has been successfully added!</Message.Header>*/}
+      {/*</Message>*/}
     </>
 
   )

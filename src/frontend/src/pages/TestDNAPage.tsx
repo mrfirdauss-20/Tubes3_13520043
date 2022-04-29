@@ -125,7 +125,7 @@ export const TestDNAPage: FC<TestDNAProps>  = () => {
           />
         </Form.Field>
       </Form>
-      <Button onClick={handleAddNewTestDNA}>
+      <Button onClick={handleAddNewTestDNA} className="submit-button">
         Submit
       </Button>
       {        console.log("130", testResult)}

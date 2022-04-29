@@ -75,4 +75,12 @@ input {
   background-color: #e1e4e8 !important;
 }
 
+.submit-button {
+  margin-top: 10px !important;
+}
+
+.info-text {
+  color: white;
+}
+
 

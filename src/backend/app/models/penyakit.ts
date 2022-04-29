@@ -52,7 +52,6 @@ export const insertPenyakit= async (namaPenyakit: string, sequence:string, callb
       if (err) {
         callback(err);
       }
-      console.log(result["insertId"], sequence)
       await insertNilaiBorder(result["insertId"], sequence, callback);
       await insertNilaiLastOccurence(result["insertId"], sequence, callback);
       //console.log("Masuk penyakit");
