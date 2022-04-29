@@ -232,3 +232,21 @@ export class BoyerMoore {
 //   pattern: "a",
 //   lastOccurenceMap: BoyerMoore.lastOccurence("a")
 // }, "v anjay luar biasa"))
+
+export function levensthein(pattern: string, text: string): number {
+  let patternLength: number = pattern.length;
+  let textLength: number = text.length;
+
+  let d: number[][] = [];
+  let i: number;
+  let j: number;
+
+  if(pattern.length == 0 || text.length==0) {
+    return text.length
+  }else if(pattern[0]==text[0]){
+    return levensthein(pattern.slice(1), text.slice(1))
+  }else{
+    return 1 + Math.min(levensthein(pattern, text.slice(1)), levensthein(pattern.slice(1), text), levensthein(pattern.slice(1), text.slice(1)))
+  }
+
+}

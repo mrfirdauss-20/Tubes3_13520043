@@ -3,5 +3,5 @@ export interface PencarianP{
     tanggal: Date; //YY
     namaPengguna: string;
     hasil: number;
-    //kemiripan: float;
+    kemiripan: number;
 }
