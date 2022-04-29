@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8ae2df6c-5876-4216-8d8b-b89e7101e20f" name="Changes" comment="" />
+    <list default="true" id="8ae2df6c-5876-4216-8d8b-b89e7101e20f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backend/app/models/pencarian.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/app/models/pencarian.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frontend/src/pages/HistoryPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/src/pages/HistoryPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frontend/src/pages/TestDNAPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/src/pages/TestDNAPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frontend/src/state.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/src/state.ts" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -31,6 +38,8 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="ts.external.directory.path" value="D:\OneDrive - Institut Teknologi Bandung\Work\lci-ui\node_modules\typescript\lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
@@ -43,7 +52,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="9fa05fd5-75c6-499b-9613-5a24f85e1054" name="Changes" comment="" />
+      <changelist id="8ae2df6c-5876-4216-8d8b-b89e7101e20f" name="Changes" comment="" />
       <created>1650641592012</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -52,6 +61,7 @@
       <workItem from="1650726904210" duration="6867000" />
       <workItem from="1650735840542" duration="196000" />
       <workItem from="1650736044001" duration="92000" />
+      <workItem from="1651233740770" duration="1799000" />
     </task>
     <servers />
   </component>

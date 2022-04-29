@@ -26,7 +26,7 @@ export const HistoryPage: FC = () => {
             <Card.Header>{testResult.namaPengguna}</Card.Header>
             <Card.Meta>{testResult.date}</Card.Meta>
             <Card.Description>{testResult.penyakit}</Card.Description>
-            <Card.Description>{testResult.hasil? "Positive" : "Negative"}</Card.Description>
+            <Card.Description>{testResult.hasil? "Positive" : "Negative"} - {testResult.similarity}%</Card.Description>
           </Card.Content>
         </Card>
       );
@@ -67,6 +67,7 @@ export const HistoryPage: FC = () => {
         namaPengguna: testResult.namaPengguna,
         penyakit: testResult.namaPenyakit,
         hasil: testResult.hasil,
+        similarity: testResult.kemiripan * 100
       })
     });
     setTestResults(testResultsResponse);

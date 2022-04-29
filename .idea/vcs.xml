@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="VcsDirectoryMappings">
-<<<<<<< HEAD
-    <mapping directory="" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/../../../Work/lci-ui" vcs="Git" />
-=======
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
->>>>>>> 892aa65ab1b8c4663e059db11dbfea3ae069ae72
   </component>
 </project>
