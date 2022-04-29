@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm run build && node dist/index.js",
-    "build": "webpack --config webpack.config.js"
+    "start": "npm install --dev && npm run build && node dist/index.js",
+    "build": "webpack --config webpack.config.js",
+    "heroku-prebuild": "npm install --dev"
   },
   "author": "",
   "license": "ISC",
