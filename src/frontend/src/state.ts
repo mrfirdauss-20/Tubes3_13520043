@@ -15,7 +15,9 @@ export interface TestResult {
   namaPengguna: string;
   penyakit: string;
   hasil: boolean;
+  similarity: number;
 }
+
 
 export interface SearchQuery {
   date: string;

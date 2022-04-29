@@ -16,7 +16,7 @@ interface TestDNAProps {
 
 const initialState = {
   newTestDNA: { namaPengguna: "", sequenceDNA: "", prediksiPenyakit: "" },
-  testResult: { date: "", namaPengguna: "", penyakit: "", hasil: true }
+  testResult: { date: "", namaPengguna: "", penyakit: "", hasil: true, similarity: 0 }
 }
 
 export const TestDNAPage: FC<TestDNAProps>  = () => {
@@ -28,18 +28,6 @@ export const TestDNAPage: FC<TestDNAProps>  = () => {
 
   let fileReader: FileReader;
 
-  // const renderTestResult = () => {
-  //     return(
-  //       <Card className="history-page-card-component">
-  //         <Card.Content>
-  //           <Card.Header>{testResult.namaPengguna}</Card.Header>
-  //           <Card.Meta>{convertDateUsingRegex(testResult.date)}</Card.Meta>
-  //           <Card.Description>{testResult.penyakit}</Card.Description>
-  //           <Card.Description>{testResult.hasil == true ? "Positive" : "Negative"}</Card.Description>
-  //         </Card.Content>
-  //       </Card>
-  //       )
-  // };
 
   const handleFileRead = () => {
     const content = fileReader.result;
@@ -72,6 +60,7 @@ export const TestDNAPage: FC<TestDNAProps>  = () => {
     testResultsResponse.namaPengguna = data.namaPengguna;
     testResultsResponse.penyakit = data. namaPenyakit;
     testResultsResponse.hasil = data.hasil;
+    testResultsResponse.similarity = data.kemiripan * 100;
     setTestResult(testResultsResponse);
   }
 
@@ -129,7 +118,6 @@ export const TestDNAPage: FC<TestDNAProps>  = () => {
       <Button onClick={handleAddNewTestDNA} className="submit-button">
         Submit
       </Button>
-      {        console.log("130", testResult)}
       {
         testResult.date != "" ?
         <Card className="history-page-card-component">
@@ -137,7 +125,7 @@ export const TestDNAPage: FC<TestDNAProps>  = () => {
           <Card.Header>{testResult.namaPengguna}</Card.Header>
           <Card.Meta>{convertDateUsingRegex(testResult.date)}</Card.Meta>
           <Card.Description>{testResult.penyakit}</Card.Description>
-          <Card.Description>{testResult.hasil == true ? "Positive" : "Negative"}</Card.Description>
+          <Card.Description>{testResult.hasil == true ? "Positive" : "Negative"} - {testResult.similarity}%</Card.Description>
           </Card.Content>
         </Card>
       :
