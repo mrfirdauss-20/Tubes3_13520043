@@ -8,7 +8,7 @@ export const storeNewPenyakit =
   async (newPenyakit : NewPenyakit
   ) => {
     const URL_PATH = "penyakit";
-    const url = "http://localhost:5000/" + URL_PATH;
+    const url = "https://tubes3-13520043.herokuapp.com/" + URL_PATH;
     return (
       axios({
         method: "post",
